@@ -3,4 +3,13 @@ __pycache__/
 outputs/
 .venv/
 .claude/
-miruns/
+mlruns/
+
+# Gros fichiers de données (> 100 MB)
+data/train.csv
+data/test.csv
+
+# Données générées
+data/processed/
+data/samples/
+models/

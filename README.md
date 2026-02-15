@@ -8,6 +8,7 @@ Un projet complet de machine learning pour la prévision des ventes de produits 
 - [Description du Dataset](#description-du-dataset)
 - [Structure du Projet](#structure-du-projet)
 - [Installation](#installation)
+- [Téléchargement des Données](#téléchargement-des-données)
 - [Guide d'Utilisation](#guide-dutilisation)
 - [Stratégies d'Échantillonnage](#stratégies-déchantillonnage)
 - [Ingénierie des Features](#ingénierie-des-features)
@@ -135,6 +136,60 @@ joblib>=1.3.0
 lightgbm>=4.6.0
 xgboost>=3.2.0
 mlflow>=3.9.0
+```
+
+## Téléchargement des Données
+
+⚠️ **Important**: Les fichiers de données volumineux (`train.csv` et `test.csv`) ne sont pas inclus dans ce dépôt Git en raison des limitations de taille de GitHub.
+
+### Option 1 : Téléchargement depuis Kaggle (Recommandé)
+
+1. Créer un compte sur [Kaggle](https://www.kaggle.com/) si vous n'en avez pas
+2. Aller sur la page de la compétition : [Corporación Favorita Grocery Sales Forecasting](https://www.kaggle.com/c/favorita-grocery-sales-forecasting)
+3. Accepter les règles de la compétition
+4. Télécharger les fichiers dans l'onglet "Data"
+5. Extraire tous les fichiers CSV dans le dossier `data/` du projet
+
+**Avec Kaggle CLI** (plus rapide):
+
+```bash
+# Installer Kaggle CLI
+pip install kaggle
+
+# Configurer votre API token (voir https://www.kaggle.com/docs/api)
+# Télécharger les données
+kaggle competitions download -c favorita-grocery-sales-forecasting
+
+# Extraire dans le dossier data/
+unzip favorita-grocery-sales-forecasting.zip -d data/
+```
+
+### Option 2 : Utiliser les échantillons générés
+
+Si vous voulez juste tester le code sans télécharger 4,7 GB de données, vous pouvez créer des échantillons :
+
+```python
+from data_sampler import SalesDataSampler
+
+# Créer un petit échantillon pour tests rapides
+sampler = SalesDataSampler('data/train.csv')
+sample_df = sampler.hybrid_sample(frac=0.01)  # 1% des données
+sampler.save_sample(sample_df, 'test_sample')
+```
+
+### Fichiers requis
+
+Après téléchargement, votre dossier `data/` doit contenir :
+
+```
+data/
+├── train.csv              # 4,7 GB - Données d'entraînement
+├── test.csv               # 120 MB - Données de test
+├── items.csv              # 102 KB - Métadonnées articles
+├── stores.csv             # 1,4 KB - Informations magasins
+├── oil.csv                # 20 KB - Prix du pétrole
+├── holidays_events.csv    # 22 KB - Jours fériés
+└── transactions.csv       # 1,5 MB - Transactions quotidiennes
 ```
 
 ## Guide d'Utilisation
